@@ -11,3 +11,4 @@ typedef struct		s_dat
 }						t_dat;
 
 typedef void (*t_handler)(int);
+t_handler signal(int sig, t_handler func);

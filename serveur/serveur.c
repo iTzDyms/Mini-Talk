@@ -21,13 +21,15 @@ static void		ft_printpid(void);
 static int		ft_power(int nb, int power);
 static void		ft_handle_usr2(void);
 static void		ft_handle_usr1(void);
-static int		handler(int sig);
+static void		handler(int sig);
 
 int		main(void)
 {
 	g_dat.c = 0;
 	g_dat.i = 0;
 	ft_printpid();
+	signal(SIGUSR1, handler);
+	signal(SIGUSR2, handler);
 	return (0);
 }
 
@@ -38,23 +40,26 @@ static void		ft_printpid(void)
 	pid = getpid();
 	ft_putnbr(pid);
 	ft_putchar('\n');
-	signal(SIGUSR1, handler);
-	signal(SIGUSR2, handler);
 }
 
 static void		handler(int sig)
 {
 	if (sig == SIGUSR1)
+		ft_handle_usr1();
+	else if (sig == SIGUSR2)
 		ft_handle_usr2();
-	else if (sig == SIGUSR1)
-		ft_handle_usr2();
-	if (g_dat.nb == 7)
-		ft_putchar(g_dat.c);
+	if (g_dat.i == 7)
+		{
+			ft_putchar(g_dat.c);
+			g_dat.c = 0;
+			g_dat.i = 0;
+		}
+	pause();
 }
 
 static void		ft_handle_usr1(void)
 {
-	g_dat.c += ft_power(2, g_dat.i)
+	g_dat.c += ft_power(2, g_dat.i);
 	g_dat.i++;
 }
 
@@ -65,7 +70,7 @@ static void		ft_handle_usr2(void)
 
 static int		ft_power(int nb, int power)
 {
-	if (power = 0)
+	if (power == 0)
 		return (1);
 	while (power)
 		{
