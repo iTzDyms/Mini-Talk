@@ -11,6 +11,7 @@
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <signal.h>
 #include "../libft/includes/libft.h"
 #include "minitalk.h"
@@ -22,14 +23,19 @@ static int		ft_power(int nb, int power);
 static void		ft_handle_usr2(void);
 static void		ft_handle_usr1(void);
 static void		handler(int sig);
+static void		ft_proceed(void);
 
 int		main(void)
 {
-	g_dat.c = 0;
+	g_dat.c[0] = 0;
+	g_dat.c[1] = 0;
 	g_dat.i = 0;
+	g_dat.str = NULL;
 	ft_printpid();
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
+	while (42)
+		;
 	return (0);
 }
 
@@ -49,33 +55,43 @@ static void		handler(int sig)
 	else if (sig == SIGUSR2)
 		ft_handle_usr2();
 	if (g_dat.i == 7)
-		{
-			ft_putchar(g_dat.c);
-			g_dat.c = 0;
-			g_dat.i = 0;
-		}
-	pause();
+		ft_proceed();
 }
 
-static void		ft_handle_usr1(void)
+static void		ft_proceed(void)
 {
-	g_dat.c += ft_power(2, g_dat.i);
-	g_dat.i++;
+	if (g_dat.c[0] == '\0' && g_dat.str)
+		{
+			ft_putstr(g_dat.str);
+			free(g_dat.str);
+			g_dat.str = NULL;
+		}
+	else
+		ft_strfjoin(g_dat.str, g_dat.c);
+	g_dat.c[0] = 0;
+	g_dat.i = 0;
 }
 
 static void		ft_handle_usr2(void)
+{
+	g_dat.c[0] += ft_power(2, g_dat.i);
+	g_dat.i++;
+}
+
+static void		ft_handle_usr1(void)
 {
 	g_dat.i++;
 }
 
 static int		ft_power(int nb, int power)
 {
-	if (power == 0)
-		return (1);
+	int	new;
+
+	new = 1;
 	while (power)
 		{
-			nb *= power;
+			new *= nb;
 			power--;
 		}
-	return (nb);
+	return (new);
 }
