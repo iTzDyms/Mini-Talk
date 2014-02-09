@@ -29,6 +29,23 @@ void				prompt(int pid, char *line)
 	send('\0', pid);
 }
 
+void	ft_send_len(int pid, size_t len)
+{
+	int	i;
+
+	i = 32;
+	while (i)
+		{
+			if (len % 2)
+				kill(pid, SIGUSR1);
+			else
+				kill(pid, SIGUSR2);
+			len /= 2;
+			usleep(50);
+			i--;
+		}
+}
+
 static void			send(char c, int pid)
 {
 	char		*tab;
@@ -40,10 +57,10 @@ static void			send(char c, int pid)
 	while (i >= 0)
 		{
 			if (tab[i] == 0)
-				kill(pid, SIGUSR1);
-			else
 				kill(pid, SIGUSR2);
-			usleep(50);
+			else
+				kill(pid, SIGUSR1);
+			usleep(40);
 			i--;
 		}
 	free(tab);
