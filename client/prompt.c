@@ -60,7 +60,7 @@ static void			send(char c, int pid)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			usleep(40);
+			usleep(60);
 			i--;
 		}
 	free(tab);
