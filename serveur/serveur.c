@@ -27,10 +27,9 @@ static void		ft_proceed(void);
 
 int		main(void)
 {
-	g_dat.c[0] = 0;
-	g_dat.c[1] = 0;
+	g_dat.c = 0;
 	g_dat.i = 0;
-	g_dat.str = NULL;
+	g_dat.str = (char *) malloc(sizeof(char));
 	ft_printpid();
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
@@ -60,21 +59,25 @@ static void		handler(int sig)
 
 static void		ft_proceed(void)
 {
-	if (g_dat.c[0] == '\0' && g_dat.str)
+	char		tab[2];
+
+	tab[1] = '\0';
+	tab[0] = g_dat.c;
+	if ((g_dat.c) == '\0')
 		{
 			ft_putstr(g_dat.str);
-			free(g_dat.str);
-			g_dat.str = NULL;
+			ft_strclr(g_dat.str);
+			g_dat.str = ft_strfjoin(g_dat.str, tab);
 		}
 	else
-		ft_strfjoin(g_dat.str, g_dat.c);
-	g_dat.c[0] = 0;
+		g_dat.str = ft_strfjoin(g_dat.str, tab);
+	g_dat.c = 0;
 	g_dat.i = 0;
 }
 
 static void		ft_handle_usr2(void)
 {
-	g_dat.c[0] += ft_power(2, g_dat.i);
+	g_dat.c += ft_power(2, g_dat.i);
 	g_dat.i++;
 }
 

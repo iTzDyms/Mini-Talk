@@ -15,24 +15,18 @@ static void				ft_chartobin(char c, char *tab);
 
 static void				send(char c, int pid);
 
-void				prompt(int pid)
+void				prompt(int pid, char *line)
 {
 	int		i;
-	char	*line;
 
-	while (get_next_line(0, &line) == 1)
-	{
-		i = 0;
-		while (line[i])
-			{
-				send(line[i], pid);
-				i++;
-			}
-		send('\n', pid);
-		send('\0', pid);
-		free(line);
-		line = NULL;
-	}
+	i = 0;
+	while (line[i])
+		{
+			send(line[i], pid);
+			i++;
+		}
+	send('\n', pid);
+	send('\0', pid);
 }
 
 static void			send(char c, int pid)

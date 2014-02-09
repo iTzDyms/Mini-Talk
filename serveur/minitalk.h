@@ -6,7 +6,7 @@
 
 typedef struct		s_dat
 {
-	char				c[2];
+	char				c;
 	int					i;
 	char				*str;
 }						t_dat;
