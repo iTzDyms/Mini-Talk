@@ -41,7 +41,7 @@ void	ft_send_len(int pid, size_t len)
 			else
 				kill(pid, SIGUSR2);
 			len /= 2;
-			usleep(100);
+			pause();
 			i--;
 		}
 }
@@ -60,7 +60,7 @@ static void			send(char c, int pid)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			usleep(100);
+			pause();
 			i--;
 		}
 	free(tab);
