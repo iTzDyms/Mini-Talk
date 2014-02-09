@@ -88,7 +88,6 @@ static void		handler(int sig)
 
 static void		ft_proceed(char **tmp, int *i, char *c, char **str)
 {
-	ft_putchar(*c);
 	if ((*c) == '\0')
 		{
 			**tmp = *c;
