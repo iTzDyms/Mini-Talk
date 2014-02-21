@@ -6,3 +6,5 @@ gcc -Wall -Wextra -Werror -03 client.c prompt.c -L ../libft/ -lft -o ../client
 cd ../serv_src
 gcc -Wall -Wextra -Werror -03 serveur.c -L ../libft/ -lft -o ../serveur
 cd ..
+echo "done\n"
+echo "usage is: ./server\n          ./client server_pid massage\n"
