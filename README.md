@@ -1,2 +1,1 @@
-Mini-Talk
-=========
+run compile after cloning.

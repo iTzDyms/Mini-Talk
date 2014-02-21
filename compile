@@ -1,0 +1,8 @@
+git submodule init
+git submodule update
+make -C libft/
+cd client_src
+gcc -Wall -Wextra -Werror -03 client.c prompt.c -L ../libft/ -lft -o ../client
+cd ../serv_src
+gcc -Wall -Wextra -Werror -03 serveur.c -L ../libft/ -lft -o ../serveur
+cd ..
